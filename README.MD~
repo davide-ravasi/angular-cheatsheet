@@ -26,7 +26,6 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     )
 </code>
-
 ## to load component:
 
 <code><router-outlet></router-outlet></code>
@@ -149,9 +148,3 @@ export class DropdownDirective {
 </code>
 
 [http://www.learn-angular.fr/les-directives/](http://www.learn-angular.fr/les-directives/)
-
-
-
-
-
-
