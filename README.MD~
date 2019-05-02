@@ -1,7 +1,8 @@
 # ROUTING
 ## In 
 
-<code>import { RouterModule, Routes } from '@angular/router';
+<code>
+import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,15 +18,18 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   { path: '**', component: PageNotFoundComponent }
-];</code>
+];
+</code>
 
 ## imports:
 
-<code>    RouterModule.forRoot(
+<code>
+ RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     )
 </code>
+
 ## to load component:
 
 <code><router-outlet></router-outlet></code>
@@ -33,7 +37,8 @@ const appRoutes: Routes = [
 
 ## in tag link html
 
-<code><a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+<code>
+<a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
 <a [routerLink]="['/about']" routerLinkActive="active">About</a>
 
       <a
@@ -46,20 +51,22 @@ const appRoutes: Routes = [
 
 ## in javascript
 
-<code>import { ActivatedRoute, Params } from '@angular/router';
+<code>
+import { ActivatedRoute, Params } from '@angular/router';
 
 constructor(private route: ActivatedRoute) { }
 
 this.router.navigate(['/servers',id,'edit']);
 
 this._router.navigate(['detail'], { queryParams: { pageNum: this.pageNum + 1 }, relativeTo: this._Activatedroute } );
-
-[https://www.tektutorialshub.com/angular/angular-navigating-between-routes/](https://www.tektutorialshub.com/angular/angular-navigating-between-routes/)
 </code>
+[https://www.tektutorialshub.com/angular/angular-navigating-between-routes/](https://www.tektutorialshub.com/angular/angular-navigating-between-routes/)
+
 
 ## to retrieve in component :
 
-<code>    this.snapshotPageNo = this.Activatedroute.snapshot.queryParams['pageNum'] || 0;
+<code>    
+this.snapshotPageNo = this.Activatedroute.snapshot.queryParams['pageNum'] || 0;
      
     this.Activatedroute.params
         .subscribe(params => { 
@@ -75,14 +82,15 @@ this._router.navigate(['detail'], { queryParams: { pageNum: this.pageNum + 1 }, 
 
 [https://www.tektutorialshub.com/angular/angular-passing-optional-query-parameters-to-route/](https://www.tektutorialshub.com/angular/angular-passing-optional-query-parameters-to-route/)
 
-<code>this.router.navigate(['/home'], { fragment: 'top' });</code>
+<code>
+	this.router.navigate(['/home'], { fragment: 'top' });
+</code>
 
 
 ## to preserve the query if we click another link in javascript
 
 <code>
-
-this.router.navigate(['/servers',id,'edit'], {queryParamsHandling: 'preserve'});
+	this.router.navigate(['/servers',id,'edit'], {queryParamsHandling: 'preserve'});
 </code>
 
 ***
@@ -148,3 +156,9 @@ export class DropdownDirective {
 </code>
 
 [http://www.learn-angular.fr/les-directives/](http://www.learn-angular.fr/les-directives/)
+
+
+
+
+
+
