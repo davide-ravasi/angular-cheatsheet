@@ -1,7 +1,6 @@
 # ROUTING
 ## In 
 
-<code>
 	import { RouterModule, Routes } from '@angular/router';
 
 	const appRoutes: Routes = [
@@ -19,27 +18,25 @@
 	  },
 	  { path: '**', component: PageNotFoundComponent }
 	];
-</code>
 
 ## imports:
 
-<code>
+
 	RouterModule.forRoot(
 		appRoutes,
 		{ enableTracing: true } // <-- debugging purposes only
 	)
-</code>
+
 
 ## to load component:
 
-<code>
 	<router-outlet></router-outlet>
-</code>
+
 
 
 ## in tag link html
 
-<code>
+
 	<a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
 	<a [routerLink]="['/about']" routerLinkActive="active">About</a>
 
@@ -49,11 +46,11 @@
 		fragment="loading"
 		class="list-group-item"
 		*ngFor="let server of servers">
-</code>
+
 
 ## in javascript
 
-<code>
+
 	import { ActivatedRoute, Params } from '@angular/router';
 
 	constructor(private route: ActivatedRoute) { }
@@ -61,13 +58,14 @@
 	this.router.navigate(['/servers',id,'edit']);
 
 	this._router.navigate(['detail'], { queryParams: { pageNum: this.pageNum + 1 }, relativeTo: this._Activatedroute } 	);
-</code>
+
+
 [https://www.tektutorialshub.com/angular/angular-navigating-between-routes/](https://www.tektutorialshub.com/angular/angular-navigating-between-routes/)
 
 
 ## to retrieve in component :
 
-<code>    
+
 	this.snapshotPageNo = this.Activatedroute.snapshot.queryParams['pageNum'] || 0;
      
 	this.Activatedroute.params
@@ -80,20 +78,20 @@
 	this.Activatedroute.queryParams
 
 	this.Activatedroute.fragment
-</code>
+
 
 [https://www.tektutorialshub.com/angular/angular-passing-optional-query-parameters-to-route/](https://www.tektutorialshub.com/angular/angular-passing-optional-query-parameters-to-route/)
 
-<code>
+
 	this.router.navigate(['/home'], { fragment: 'top' });
-</code>
+
 
 
 ## to preserve the query if we click another link in javascript
 
-<code>
+
 	this.router.navigate(['/servers',id,'edit'], {queryParamsHandling: 'preserve'});
-</code>
+
 
 ***
 
@@ -101,7 +99,7 @@
 
 directive to higlight an element with param:
 
-<code>
+
 	import {Directive, Renderer2, ElementRef, HostListener, Input} from '@angular/core';
 
 	@Directive({
@@ -129,17 +127,17 @@ directive to higlight an element with param:
 	}
 
 
-</code>
+
 
 ## in html
 
-<code>
-	<div [appHighlight]="'yellow'">Texte en highlight</div>
-</code>
+
+		<div [appHighlight]="'yellow'">Texte en highlight</div>
+
 
 ## with @hostBinding
 
-<code>
+
 	import { Directive, HostBinding, HostListener } from '@angular/core';
 
 	@Directive({
@@ -155,7 +153,7 @@ directive to higlight an element with param:
 		this.isOpen = !this.isOpen;      
 	    }
 	}
-</code>
+
 
 [http://www.learn-angular.fr/les-directives/](http://www.learn-angular.fr/les-directives/)
 
