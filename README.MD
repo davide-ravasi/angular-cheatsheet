@@ -81,6 +81,7 @@
 
 
 [https://www.tektutorialshub.com/angular/angular-passing-optional-query-parameters-to-route/](https://www.tektutorialshub.com/angular/angular-passing-optional-query-parameters-to-route/)
+[https://vsavkin.com/routeur-angular-comprendre-l%C3%A9tat-du-routeur-5e15e729a6df](https://vsavkin.com/routeur-angular-comprendre-l%C3%A9tat-du-routeur-5e15e729a6df)
 
 
 	this.router.navigate(['/home'], { fragment: 'top' });
@@ -93,7 +94,118 @@
 	this.router.navigate(['/servers',id,'edit'], {queryParamsHandling: 'preserve'});
 
 
+## protect routes
+###auth-guard.service.ts
+
+	import { Injectable } from '@angular/core';
+	import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
+	import { Observable } from 'rxjs';
+	import { AuthService } from './auth.service';
+
+	@Injectable()
+	export class AuthGuard implements CanActivate {
+
+
+	  constructor(private authService: AuthService, private router: Router) {
+	  }
+
+	  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+
+	    return this.authService.isAuthenticated()
+		  .then(
+		        (authenticated: boolean) => {
+		       if(authenticated) {
+		           return true;
+		        } else {
+		           this.router.navigate(['/']);
+		        }
+		    )
+	  }
+	}
+
+### auth.service.ts (funzione per fare check sull'accesso)
+
+	export class AuthService {
+	    loggedIn = false;
+	    
+	    isAuthenticated() {
+		const promise = new Promise(
+		    (resolve,reject) => {
+		        setTimeout(() => {
+		            resolve(this.loggedIn);
+		        },800)
+		    }
+		);
+		
+		return promise;
+	    }
+	    
+	    login() {
+		this.loggedIn = true;
+	    }
+	    logout() {
+		this.loggeId = false;
+	    }
+	}
+
+## imports in app-routing.ts
+	import { AuthGuard } from './auth-guard.service'; 
+
+	{ path: 'servers', component: ServersComponent ,canActivate: [AuthGuard]}
+
+## imports in app.module.ts
+	import { AuthService} from './auth.service';
+	import { AuthGuard } from './auth-guard.service';
+
+	providers: [ServersService, AuthService, AuthGuard],
+
+
+
+## protect routes to quit
+
+### can-deactivate-guard.service.ts
+
+	import { Observable } from 'rxjs/Observable';
+
+	export interface CanComponentDeactivate {
+	    canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
+	} 
+
+	export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate> {
+	    canDeactivate(component: CanComponentDeactivate, currentRoute: ActivatedRouteSnaphsot, currentState: RouterStateSnapshot, nextState?: RouterStateSnapshot ): Observable<boolean> | Promise<boolean> | boolean {
+		return component.canDeactivate();
+	    }
+	}
+
+
+#### in path
+
+	{ path: ':id/edit', component: EditServerComponent, canDeactivate: [CanDeactivateGuard] } 
+
+
+#### in component 
+	canDeactivate() : Observable<boolean> | Promise<boolean> | boolean {
+		if (!this.allowEdit) {
+		    return true;
+		} 
+
+		console.log("is ok to pass " + this.serverName !== this.server.name || this.serverStatus !== this.server.status && !this.changesSaved);
+
+		if(this.serverName !== this.server.name || this.serverStatus !== this.server.status && !this.changesSaved) {
+		    return confirm('do you want to discard the changes?');
+		} else {
+		    return true;
+		}
+	}
+	
+
+
+[https://scotch.io/courses/routing-angular-2-applications/candeactivate](https://scotch.io/courses/routing-angular-2-applications/candeactivate)
+
+
 ***
+
+
 
 # CUSTOM DIRECTIVES
 
